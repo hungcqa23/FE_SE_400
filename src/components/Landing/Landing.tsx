@@ -3,20 +3,19 @@ import { Link } from 'react-router-dom';
 export default function Landing() {
   return (
     <>
-      <div className='h-[37rem] mt-[6.375rem] flex flex-row justify-between overflow-hidden bg-nut '>
-        <div className='mt-[7rem] ms-[13rem] flex flex-col z-10 items-start'>
-          <img src='/pure-nature.svg' alt='100percent' />
-          <p className='mt-3 text-5xl tracking-normal leading-tight font-bold text-orange-900 '>
-            Your favorite nuts <br />
-            is now ready to
+      <div className='h-[37rem] mt-[6rem] flex flex-row justify-between overflow-hidden bg-nut '>
+        <div className='mt-[7rem] ms-[14rem] flex flex-col z-10 items-start'>
+          <img src='/pure-nature.svg' alt='100percent' className='select-none' />
+          <p className='mt-3 text-5xl tracking-normal leading-tight font-bold text-orange-600 select-none'>
+            Tinh túy thiên nhiên <br />
+            cho cuộc sống
           </p>
-          <span className='mt-6 mb-10 text-6xl tracking-wider text-orange-600'>
-            <em className='not-italic font-bold'>#GRAB</em>AND
-            <em className='not-italic font-bold'>GO!</em>
+          <span className='mt-6 mb-10 text-3xl tracking-wider leading-snug font-bold text-orange-900 select-none'>
+            #ĐIỀUBẠNLUÔNMUỐN
           </span>
-          <Link to='/products'>
-            <button className='px-5 py-5 text-xl font-medium  rounded-2xl bg-orange-300 text-orange-900  flex flex-row items-center gap-2'>
-              Explore Now
+          <Link to='/products' className='flex flex-row w-full justify-start '>
+            <button className='px-5 py-5 text-xl font-medium hover:bg-opacity-70 duration-300 rounded-2xl bg-orange-300 text-orange-900  flex flex-row items-center gap-2'>
+              Mua hàng
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'
@@ -39,7 +38,7 @@ export default function Landing() {
         <img
           src='/hero.png'
           alt='hero'
-          className='w-[50rem] h-[50rem] -mt-[3rem] drop-shadow-2xl '
+          className='w-[50rem] h-[50rem] -mt-[3rem] me-9 drop-shadow-2xl hover:opacity-90 hover:scale-105 duration-300'
         />
       </div>
     </>
