@@ -1,0 +1,23 @@
+import { Link } from 'react-router-dom';
+import Cart from 'src/components/Cart';
+import Logo from 'src/components/Logo';
+import Navigation from 'src/components/Navigation';
+
+export default function Header() {
+  return (
+    <header>
+      <div className='fixed z-50 top-0 left-0 right-0 h-[3.375rem] px-[5rem] py-[3rem] flex flex-row items-center justify-between bg-white '>
+        <div className='flex flex-row items-center'>
+          <Logo />
+          <Navigation />
+        </div>
+        <div className='flex flex-row items-center gap-5'>
+          <Link to='/'>
+            <img src='/search.svg' alt='search' className='w-[3rem] h-[3rem]' />
+          </Link>
+          <Cart />
+        </div>
+      </div>
+    </header>
+  );
+}
