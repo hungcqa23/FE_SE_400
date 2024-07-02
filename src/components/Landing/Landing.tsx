@@ -6,12 +6,12 @@ export default function Landing() {
       <div className='h-[37rem] mt-[6rem] flex flex-row justify-between overflow-hidden bg-nut '>
         <div className='mt-[7rem] ms-[14rem] flex flex-col z-10 items-start'>
           <img src='/pure-nature.svg' alt='100percent' className='select-none' />
-          <p className='mt-3 text-5xl tracking-normal leading-tight font-bold text-orange-600 select-none'>
+          <p className='mt-3 text-5xl tracking-normal leading-tight font-bold text-orange-600 '>
             Tinh túy thiên nhiên <br />
             cho cuộc sống
           </p>
-          <span className='mt-6 mb-10 text-3xl tracking-wider leading-snug font-bold text-orange-900 select-none'>
-            #ĐIỀUBẠNLUÔNMUỐN
+          <span className='mt-6 mb-10 text-3xl tracking-wider leading-snug font-bold text-orange-900 '>
+            #HẠTĐIỀUBẠNLUÔNMUỐN
           </span>
           <Link to='/products' className='flex flex-row w-full justify-start '>
             <button className='px-5 py-5 text-xl font-medium hover:bg-opacity-70 duration-300 rounded-2xl bg-orange-300 text-orange-900  flex flex-row items-center gap-2'>

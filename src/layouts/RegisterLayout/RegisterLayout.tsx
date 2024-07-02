@@ -9,7 +9,6 @@ export default function Register({ children }: Props) {
     <div>
       <RegisterHeader />
       {children}
-      <Footer />
     </div>
   );
 }
