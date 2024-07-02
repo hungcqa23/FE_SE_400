@@ -13,7 +13,7 @@ export default function OutProduct() {
     <div className='flex flex-col px-[10rem] pb-10'>
       <div className='flex flex-row justify-between items-end mb-6'>
         <h2 className='text-2xl font-bold'>Sản phẩm nổi bật</h2>
-        <Link to=''>
+        <Link to='/products'>
           <span className='flex flex-row gap-2 items-center font-medium text-orange-400'>
             Xem thêm <MoveRight />
           </span>
