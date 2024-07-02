@@ -30,12 +30,12 @@ export default function Footer() {
         <Separator orientation='vertical' />
         <div className='flex flex-col items-start'>
           <h2 className='text-2xl mb-7 font-semibold uppercase'>Thông tin chung</h2>
-          <p className='mb-2 cursor-pointer'>Giới thiệu</p>
-          <p className='mb-2 cursor-pointer'>Thông tin liên hệ</p>
-          <p className='mb-2 cursor-pointer'>Nhận gia công hạt điều</p>
-          <p className='mb-2 cursor-pointer'>Chính sách bảo mật</p>
-          <p className='mb-2 cursor-pointer'>Chính sách thanh toán</p>
-          <p className='mb-2 cursor-pointer'>Chính sách hoàn trả hàng</p>
+          <p className='mb-3 cursor-pointer'>Giới thiệu</p>
+          <p className='mb-3 cursor-pointer'>Thông tin liên hệ</p>
+          <p className='mb-3 cursor-pointer'>Nhận gia công hạt điều</p>
+          <p className='mb-3 cursor-pointer'>Chính sách bảo mật</p>
+          <p className='mb-3 cursor-pointer'>Chính sách thanh toán</p>
+          <p className='mb-3 cursor-pointer'>Chính sách hoàn trả hàng</p>
         </div>
       </div>
       <Separator />

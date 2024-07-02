@@ -20,7 +20,7 @@ const RatingStar: React.FC<RatingStarProps> = ({ value }) => {
     </svg>
   ));
 
-  return <div className='flex mt-2'>{stars}</div>;
+  return <div className='flex mt-2 '>{stars}</div>;
 };
 
 export default RatingStar;
