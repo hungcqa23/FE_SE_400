@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Cart from 'src/components/Cart';
+import Cart from 'src/components/CartButton';
 import LoginButton from 'src/components/LoginButton/LoginButton';
 import Logo from 'src/components/Logo';
 import Navigation from 'src/components/Navigation';

@@ -5,6 +5,8 @@ import Login from 'src/pages/Login';
 import Product from 'src/pages/Product';
 import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
@@ -19,6 +21,14 @@ export default function useRouteElement() {
     {
       path: '/product',
       element: <Product />
+    },
+    {
+      path: '/cart',
+      element: <Cart />
+    },
+    {
+      path: '/checkout',
+      element: <Checkout />
     },
     {
       path: '/login',

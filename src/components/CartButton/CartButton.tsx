@@ -12,6 +12,7 @@ import { Button } from '../ui/button';
 import CartItem from '../CartItem';
 import { ScrollArea } from 'src/components/ui/scroll-area';
 import { Separator } from 'src/components/ui/separator';
+import { Link } from 'react-router-dom';
 
 const sampleProduct = [
   {
@@ -40,7 +41,7 @@ const sampleProduct = [
   }
 ];
 
-export default function Cart() {
+export default function CartButton() {
   return (
     <Drawer direction='right'>
       <DrawerTrigger className='flex flex-row items-center gap-3 border-2 ps-1 pe-4 rounded-full py-1'>
@@ -96,8 +97,14 @@ export default function Cart() {
             </span>
             <span className='font-semibold text-base text-[#1a1a1a]'>$26</span>
           </div>
-          <Button className='bg-[#00b207]'>Thanh toán</Button>
-          <Button variant='outline'>Đi đến giỏ hàng</Button>
+          <Link to='/checkout'>
+            <Button className='bg-[#00b207] w-full rounded-full'>Thanh toán</Button>
+          </Link>
+          <Link to='/cart'>
+            <Button variant='outline' className='w-full rounded-full'>
+              Đi đến giỏ hàng
+            </Button>
+          </Link>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
