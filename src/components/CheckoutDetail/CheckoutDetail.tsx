@@ -3,11 +3,36 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import CheckoutDetailCard from '../CheckoutDetailCard';
-import { Button } from '../ui/button';
+
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { toast } from '../ui/use-toast';
 import { Textarea } from '../ui/textarea';
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+
+const cities = [
+  {
+    value: 'ho-chi-minh',
+    label: 'Hồ Chí Minh'
+  },
+  {
+    value: 'ha-noi',
+    label: 'Hà Nội'
+  },
+  {
+    value: 'da-nang',
+    label: 'Đà Nẵng'
+  },
+  {
+    value: 'hai-phong',
+    label: 'Hải Phòng'
+  },
+  {
+    value: 'can-tho',
+    label: 'Cần Thơ'
+  }
+];
 
 const FormSchema = z.object({
   firstName: z.string().min(1, {
@@ -20,8 +45,15 @@ const FormSchema = z.object({
   streetAddress: z.string().min(5, {
     message: 'Vui lòng điền địa chỉ'
   }),
-  email: z.string().min(5, {
-    message: 'Vui lòng điền địa chỉ email'
+  city: z.string({
+    required_error: 'Vui lòng chọn thành phố'
+  }),
+  district: z.string({
+    required_error: 'Vui lòng chọn quận'
+  }),
+  zipCode: z.string(),
+  email: z.string().email({
+    message: 'Vui lòng điền địa chỉ email hợp lệ'
   }),
   phoneNumber: z.string().min(10, {
     message: 'Vui lòng điền số điện thoại'
@@ -37,6 +69,7 @@ const CheckoutDetail = () => {
       lastName: '',
       companyName: '',
       streetAddress: '',
+      zipCode: '',
       email: '',
       phoneNumber: '',
       note: ''
@@ -59,7 +92,11 @@ const CheckoutDetail = () => {
       <div className='flex flex-col gap-2 w-2/4'>
         <p className='font-semibold text-2xl'>Thông tin thanh toán</p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='grid grid-cols-6 gap-4'>
+          <form
+            id='billing-form'
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='grid grid-cols-6 gap-4'
+          >
             <FormField
               control={form.control}
               name='firstName'
@@ -116,26 +153,48 @@ const CheckoutDetail = () => {
             />
             <FormField
               control={form.control}
-              name='streetAddress'
+              name='city'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>Thành phố</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Thành phố' {...field} />
-                  </FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Chọn thành phố' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {cities.map(city => (
+                        <SelectItem key={city.value} value={city.value}>
+                          {city.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name='streetAddress'
+              name='district'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>Quận</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Quận' {...field} />
-                  </FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Chọn quận' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {cities.map(city => (
+                        <SelectItem key={city.value} value={city.value}>
+                          {city.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -143,7 +202,7 @@ const CheckoutDetail = () => {
 
             <FormField
               control={form.control}
-              name='streetAddress'
+              name='zipCode'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>Zip Code</FormLabel>
@@ -199,7 +258,7 @@ const CheckoutDetail = () => {
           </form>
         </Form>
       </div>
-      <CheckoutDetailCard />
+      <CheckoutDetailCard onSubmit={form.handleSubmit(onSubmit)} />
     </div>
   );
 };
