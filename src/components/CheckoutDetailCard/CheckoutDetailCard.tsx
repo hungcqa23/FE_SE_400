@@ -36,7 +36,11 @@ const cartItems = [
   }
 ];
 
-const CheckoutDetailCard = () => {
+interface CheckoutDetailCardProps {
+  onSubmit: (data: any) => void;
+}
+
+const CheckoutDetailCard: React.FC<CheckoutDetailCardProps> = ({ onSubmit }) => {
   return (
     <Card className='w-[420px]'>
       <CardHeader>
@@ -80,7 +84,14 @@ const CheckoutDetailCard = () => {
       </CardContent>
       <CardFooter>
         <Link to='/checkout' className='w-full'>
-          <Button className='w-full bg-[#00b207] rounded-full'>Đặt hàng</Button>
+          <Button
+            onClick={onSubmit}
+            form='billing-form'
+            type='submit'
+            className='w-full bg-[#00b207] rounded-full'
+          >
+            Đặt hàng
+          </Button>
         </Link>
       </CardFooter>
     </Card>
