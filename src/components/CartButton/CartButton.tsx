@@ -14,38 +14,14 @@ import { ScrollArea } from 'src/components/ui/scroll-area';
 import { Separator } from 'src/components/ui/separator';
 import { Link } from 'react-router-dom';
 import useCartItems from 'src/hooks/useCartItems';
-
-const sampleProduct = [
-  {
-    name: 'Hạt Điều Lụa Rang Muối 500G Nguyên Hạt W240 Hũ Nhựa PET Tròn',
-    price: 299000,
-    imageUrl: '/test-product.jpeg',
-    description:
-      'Hạt điều rang muối loại 1 nguyên hạt 500g hũ nhựa tròn là một sản phẩm hạt điều ngon sử dụng loại hạt điều Bình Phước có lượng dinh dưỡng cực kỳ cao được chế biến từ hạt điều rồi rang phối trộn với muối tao nên hương vị vừa béo giòn và mặn mà cho món ăn. Hạt điều rang trộn cùng với loại muối tinh khiết đã cùng nhau để tạo nên một món ăn có hương vị vô cùng đặc biệt mà người hưởng thức khó mà quên được.',
-    rating: 4
-  },
-  {
-    name: 'Hạt Điều Lụa Rang Muối 500G Nguyên Hạt W240 Hũ Nhựa PET Tròn',
-    price: 299000,
-    imageUrl: '/test-product.jpeg',
-    description:
-      'Hạt điều rang muối loại 1 nguyên hạt 500g hũ nhựa tròn là một sản phẩm hạt điều ngon sử dụng loại hạt điều Bình Phước có lượng dinh dưỡng cực kỳ cao được chế biến từ hạt điều rồi rang phối trộn với muối tao nên hương vị vừa béo giòn và mặn mà cho món ăn. Hạt điều rang trộn cùng với loại muối tinh khiết đã cùng nhau để tạo nên một món ăn có hương vị vô cùng đặc biệt mà người hưởng thức khó mà quên được.',
-    rating: 4
-  },
-  {
-    name: 'Hạt Điều Lụa Rang Muối 500G Nguyên Hạt W240 Hũ Nhựa PET Tròn',
-    price: 299000,
-    imageUrl: '/test-product.jpeg',
-    description:
-      'Hạt điều rang muối loại 1 nguyên hạt 500g hũ nhựa tròn là một sản phẩm hạt điều ngon sử dụng loại hạt điều Bình Phước có lượng dinh dưỡng cực kỳ cao được chế biến từ hạt điều rồi rang phối trộn với muối tao nên hương vị vừa béo giòn và mặn mà cho món ăn. Hạt điều rang trộn cùng với loại muối tinh khiết đã cùng nhau để tạo nên một món ăn có hương vị vô cùng đặc biệt mà người hưởng thức khó mà quên được.',
-    rating: 4
-  }
-];
+import { formatCurrency } from 'src/utils/formatCurrency';
 
 export default function CartButton() {
   const { data, error, isLoading } = useCartItems();
 
   console.log(data);
+
+  const totalPrice = data?.reduce((acc, item) => acc + item.product.price, 0);
 
   return (
     <Drawer direction='right'>
@@ -55,7 +31,7 @@ export default function CartButton() {
       </DrawerTrigger>
       <DrawerContent className='h-screen top-0 right-0 left-auto mt-0 w-1/4 rounded-none'>
         <DrawerHeader className='flex flex-row justify-between items-center'>
-          <DrawerTitle>Giỏ hàng ({sampleProduct.length})</DrawerTitle>
+          <DrawerTitle>Giỏ hàng ({data?.length})</DrawerTitle>
           <DrawerClose>
             <svg
               width='25'
@@ -83,13 +59,9 @@ export default function CartButton() {
         </DrawerHeader>
         <ScrollArea className='h-full w-full'>
           <div className='p-4'>
-            {sampleProduct.map(product => (
+            {data?.map(item => (
               <>
-                <CartItem
-                  onRemove={() => {
-                    sampleProduct.filter(item => product === item);
-                  }}
-                />
+                <CartItem cartItem={item} onRemove={() => {}} />
                 <Separator className='my-2' />
               </>
             ))}
@@ -97,10 +69,10 @@ export default function CartButton() {
         </ScrollArea>
         <DrawerFooter>
           <div className='flex flex-row justify-between items-center'>
-            <span className='font-normal text-base text-[#1A1A1A]'>
-              {sampleProduct.length} Sản phẩm
+            <span className='font-normal text-base text-[#1A1A1A]'>{data?.length} Sản phẩm</span>
+            <span className='font-semibold text-base text-[#1a1a1a]'>
+              {formatCurrency(totalPrice)}
             </span>
-            <span className='font-semibold text-base text-[#1a1a1a]'>$26</span>
           </div>
           <Link to='/checkout'>
             <Button className='bg-[#00b207] w-full rounded-full'>Thanh toán</Button>
