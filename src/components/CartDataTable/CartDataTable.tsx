@@ -23,55 +23,22 @@ import {
   TableHeader,
   TableRow
 } from 'src/components/ui/table';
-
-const data: ICartItem[] = [
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 13,
-    image: '/bowl-cashew.png'
-  },
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 14,
-    image: '/bowl-cashew.png'
-  },
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 15,
-    image: '/bowl-cashew.png'
-  },
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 16,
-    image: '/bowl-cashew.png'
-  }
-];
-
-export type ICartItem = {
-  id: string;
-  image: string;
-  name: string;
-  quantity: number;
-  price: number;
-};
+import { ICartItem } from 'src/types/cartItem';
+import { formatCurrency } from 'src/utils/formatCurrency';
 
 export const columns: ColumnDef<ICartItem>[] = [
   {
-    accessorKey: 'image',
+    accessorKey: 'images',
     header: 'Sản phẩm',
     cell: ({ row }) => {
       return (
-        <div className='capitalize flex flex-row items-center gap-2'>
-          <img className='w-24 h-24' src={row.getValue('image')} alt='product-image' />
-          <p>{row.original.name}</p>
+        <div className='capitalize flex flex-row items-center gap-2 '>
+          <img
+            className='w-24 h-24'
+            src={row.original.product.images[0].imageUrl}
+            alt='product-image'
+          />
+          <p className='max-w-48'>{row.original.product.productName}</p>
         </div>
       );
     }
@@ -79,7 +46,9 @@ export const columns: ColumnDef<ICartItem>[] = [
   {
     accessorKey: 'price',
     header: 'Giá',
-    cell: ({ row }) => <div className='capitalize text-center'>{row.getValue('price')}</div>
+    cell: ({ row }) => (
+      <div className='capitalize text-left'>{formatCurrency(row.original.product.price)}</div>
+    )
   },
   {
     accessorKey: 'quantity',
@@ -90,14 +59,11 @@ export const columns: ColumnDef<ICartItem>[] = [
     accessorKey: 'subtotal',
     header: () => <div className='text-right'>Tổng giá trị</div>,
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue('price'));
+      const price = row.original.product.price;
       const quantity = parseFloat(row.getValue('quantity'));
 
       // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      }).format(price * quantity);
+      const formatted = formatCurrency(price * quantity);
 
       return <div className='text-right font-medium'>{formatted}</div>;
     }
@@ -106,8 +72,6 @@ export const columns: ColumnDef<ICartItem>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
-
       return (
         <Button variant='ghost' className='py-0 px-2 rounded-full'>
           <svg
@@ -143,14 +107,18 @@ export const columns: ColumnDef<ICartItem>[] = [
   }
 ];
 
-const CartDataTable = () => {
+interface CartDataTableProps {
+  cartItems: ICartItem[];
+}
+
+const CartDataTable: React.FC<CartDataTableProps> = ({ cartItems }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const table = useReactTable({
-    data,
+  const table = useReactTable<ICartItem>({
+    data: cartItems,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

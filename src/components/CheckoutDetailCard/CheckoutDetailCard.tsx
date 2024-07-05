@@ -4,43 +4,17 @@ import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Label } from '../ui/label';
-
-const cartItems = [
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 13,
-    image: '/bowl-cashew.png'
-  },
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 14,
-    image: '/bowl-cashew.png'
-  },
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 15,
-    image: '/bowl-cashew.png'
-  },
-  {
-    id: 'm5gr84i9',
-    name: 'Hạt điều rang muối',
-    quantity: 2,
-    price: 16,
-    image: '/bowl-cashew.png'
-  }
-];
+import { ICartItem } from 'src/types/cartItem';
+import { formatCurrency } from 'src/utils/formatCurrency';
 
 interface CheckoutDetailCardProps {
+  cartItems: ICartItem[];
   onSubmit: (data: any) => void;
 }
 
-const CheckoutDetailCard: React.FC<CheckoutDetailCardProps> = ({ onSubmit }) => {
+const CheckoutDetailCard: React.FC<CheckoutDetailCardProps> = ({ cartItems, onSubmit }) => {
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.product.price, 0);
+
   return (
     <Card className='w-[420px]'>
       <CardHeader>
@@ -50,17 +24,23 @@ const CheckoutDetailCard: React.FC<CheckoutDetailCardProps> = ({ onSubmit }) => 
         {cartItems.map(item => (
           <div key={item.id} className='flex justify-between items-center'>
             <div className='flex gap-2 items-center'>
-              <img className='w-14 h-14' src={item.image} alt='product-image' />
+              <img
+                className='w-14 h-14'
+                src={item.product.images[0].imageUrl}
+                alt='product-image'
+              />
               <p className='text-sm text-[#1a1a1a]'>
-                {item.name} x{item.quantity}
+                {item.product.productName} x{item.quantity}
               </p>
             </div>
-            <p className='text-sm font-medium '>${item.price * item.quantity}</p>
+            <p className='text-sm font-medium '>
+              {formatCurrency(item.product.price * item.quantity)}
+            </p>
           </div>
         ))}
         <div className='flex justify-between'>
           <p className='text-sm text-muted-foreground'>Tổng tiền hàng: </p>
-          <p className='text-sm font-medium '>$26</p>
+          <p className='text-sm font-medium '>{formatCurrency(totalPrice)}</p>
         </div>
         <div className='flex justify-between'>
           <p className='text-sm text-muted-foreground'>Phí ship: </p>
@@ -68,7 +48,7 @@ const CheckoutDetailCard: React.FC<CheckoutDetailCardProps> = ({ onSubmit }) => 
         </div>
         <div className='flex justify-between'>
           <p className='text-base text-muted-foreground'>Tổng thanh toán: </p>
-          <p className='text-base font-medium '>$26</p>
+          <p className='text-base font-medium '>{formatCurrency(totalPrice)}</p>
         </div>
         <CardTitle className='text-xl'>Phương thức thanh toán</CardTitle>
         <RadioGroup defaultValue='cod'>

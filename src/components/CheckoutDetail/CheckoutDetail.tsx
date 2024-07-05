@@ -10,6 +10,9 @@ import { toast } from '../ui/use-toast';
 import { Textarea } from '../ui/textarea';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import useCartItems from 'src/hooks/useCartItems';
+import client from 'src/api/client';
+import { redirect, useNavigate } from 'react-router-dom';
 
 const cities = [
   {
@@ -31,6 +34,109 @@ const cities = [
   {
     value: 'can-tho',
     label: 'Cần Thơ'
+  }
+];
+
+const districts = [
+  {
+    value: 'quan-1',
+    label: 'Quận 1'
+  },
+  {
+    value: 'quan-2',
+    label: 'Quận 2'
+  },
+  {
+    value: 'quan-3',
+    label: 'Quận 3'
+  },
+  {
+    value: 'quan-4',
+    label: 'Quận 4'
+  },
+  {
+    value: 'quan-5',
+    label: 'Quận 5'
+  },
+  {
+    value: 'quan-6',
+    label: 'Quận 6'
+  },
+  {
+    value: 'quan-7',
+    label: 'Quận 7'
+  },
+  {
+    value: 'quan-8',
+    label: 'Quận 8'
+  },
+  {
+    value: 'quan-9',
+    label: 'Quận 9'
+  },
+  {
+    value: 'quan-10',
+    label: 'Quận 10'
+  },
+  {
+    value: 'quan-11',
+    label: 'Quận 11'
+  },
+  {
+    value: 'quan-12',
+    label: 'Quận 12'
+  },
+  {
+    value: 'quan-binh-thanh',
+    label: 'Quận Bình Thạnh'
+  },
+  {
+    value: 'quan-phu-nhuan',
+    label: 'Quận Phú Nhuận'
+  },
+  {
+    value: 'quan-tan-binh',
+    label: 'Quận Tân Bình'
+  },
+  {
+    value: 'quan-tan-phu',
+    label: 'Quận Tân Phú'
+  },
+  {
+    value: 'quan-go-vap',
+    label: 'Quận Gò Vấp'
+  },
+  {
+    value: 'quan-thu-duc',
+    label: 'Quận Thủ Đức'
+  },
+  {
+    value: 'quan-binh-tan',
+    label: 'Quận Bình Tân'
+  },
+  {
+    value: 'quan-phu-my',
+    label: 'Quận Phú Mỹ'
+  },
+  {
+    value: 'quan-cu-chi',
+    label: 'Quận Củ Chi'
+  },
+  {
+    value: 'quan-hoc-mon',
+    label: 'Quận Hóc Môn'
+  },
+  {
+    value: 'quan-nha-be',
+    label: 'Quận Nhà Bè'
+  },
+  {
+    value: 'quan-binh-chanh',
+    label: 'Quận Bình Chánh'
+  },
+  {
+    value: 'quan-can-gio',
+    label: 'Quận Cần Giờ'
   }
 ];
 
@@ -62,6 +168,13 @@ const FormSchema = z.object({
 });
 
 const CheckoutDetail = () => {
+  const { data, error, isLoading } = useCartItems();
+  const navigate = useNavigate();
+
+  // if (error) return <div>Error: {error.message}</div>;
+
+  // if (isLoading) return <div>Loading...</div>;
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -76,7 +189,9 @@ const CheckoutDetail = () => {
     }
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const cartItemIds = data?.map(item => item._id);
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -85,6 +200,18 @@ const CheckoutDetail = () => {
         </pre>
       )
     });
+    try {
+      const res = await client.post('/orders', {
+        cartItemId: cartItemIds,
+        user: '6633317abae5f954393f0094'
+      });
+
+      console.log(res.data);
+
+      window.location.replace(res.data.order_url);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
@@ -188,9 +315,9 @@ const CheckoutDetail = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {cities.map(city => (
-                        <SelectItem key={city.value} value={city.value}>
-                          {city.label}
+                      {districts.map(district => (
+                        <SelectItem key={district.value} value={district.value}>
+                          {district.label}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -258,7 +385,7 @@ const CheckoutDetail = () => {
           </form>
         </Form>
       </div>
-      <CheckoutDetailCard onSubmit={form.handleSubmit(onSubmit)} />
+      <CheckoutDetailCard cartItems={data!} onSubmit={form.handleSubmit(onSubmit)} />
     </div>
   );
 };
