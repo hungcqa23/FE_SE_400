@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Cart from 'src/components/CartButton';
+import CartButton from 'src/components/CartButton';
 import LoginButton from 'src/components/LoginButton/LoginButton';
 import Logo from 'src/components/Logo';
 import Navigation from 'src/components/Navigation';
@@ -19,7 +19,7 @@ export default function Header() {
           <Link to='/'>
             <img src='/search.svg' alt='search' className='w-[3rem] h-[3rem]' />
           </Link>
-          {isLoggedIn ? <Cart /> : <LoginButton />}
+          {isLoggedIn ? <CartButton /> : <LoginButton />}
         </div>
       </div>
     </header>

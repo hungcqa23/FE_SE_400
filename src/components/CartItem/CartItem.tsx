@@ -1,21 +1,25 @@
 import React from 'react';
 import { Button } from '../ui/button';
+import { ICartItem } from 'src/types/cartItem';
+import { formatCurrency } from 'src/utils/formatCurrency';
 
 interface CartItemProps {
-  // name: string;
-  // price: number;
-  // imageUrl: string;
+  cartItem: ICartItem;
   onRemove: () => void;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ onRemove }) => {
+const CartItem: React.FC<CartItemProps> = ({ cartItem, onRemove }) => {
   return (
     <div className='flex flex-row items-center justify-between'>
       <div className='flex flex-row items-center gap-2'>
-        <img src='/bowl-cashew.png' alt='product' className='w-28 h-28' />
+        <img src={cartItem.product.images[0].imageUrl} alt='product' className='w-28 h-28' />
         <div className='flex flex-col justify-start'>
-          <span className='font-normal text-base text-[#1A1A1A]'>Hạt điều rang muối</span>
-          <span className='font-normal text-base text-[#808080]'>1 x $13</span>
+          <span className='font-normal text-base text-[#1A1A1A]'>
+            {cartItem.product.productName}
+          </span>
+          <span className='font-normal text-base text-[#808080]'>
+            {cartItem.quantity} x {formatCurrency(cartItem.product.price)}
+          </span>
         </div>
       </div>
       <Button variant='ghost' className='rounded-full py-0 px-2' onClick={onRemove}>
