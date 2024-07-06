@@ -6,7 +6,6 @@ export default function Product() {
   return (
     <>
       <Header />
-
       <ProductDetail />
       <Footer />
     </>

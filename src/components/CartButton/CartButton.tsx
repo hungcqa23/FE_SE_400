@@ -19,7 +19,7 @@ export default function CartButton() {
   const { data, error, isLoading } = useCartItems();
 
   const totalPrice =
-    data == undefined ? 0 : data.reduce((acc, item) => acc + item.product.price, 0);
+    data == undefined ? 0 : data.reduce((acc, item) => acc + item?.product?.price || 0, 0);
   const totalQuantity = data == undefined ? 0 : data.length;
 
   return (
@@ -28,6 +28,7 @@ export default function CartButton() {
         <img src='/cart.svg' alt='cart' className='w-[3rem] h-[3rem]' />
         <span className='font-semibold'>Giỏ hàng ({totalQuantity})</span>
       </DrawerTrigger>
+
       <DrawerContent className='h-screen top-0 right-0 left-auto mt-0 w-1/4 rounded-none'>
         <DrawerHeader className='flex flex-row justify-between items-center'>
           <DrawerTitle>Giỏ hàng ({totalQuantity})</DrawerTitle>

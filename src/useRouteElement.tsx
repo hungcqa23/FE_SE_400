@@ -19,7 +19,7 @@ export default function useRouteElement() {
       element: <ProductList />
     },
     {
-      path: '/product',
+      path: '/products/:id',
       element: <Product />
     },
     {
